@@ -3,94 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lotería - Contadores Divertidos</title>
+<title>Lotería Cubana - Suspense Máximo</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: #fff;
-    text-align: center;
-    padding: 40px;
-  }
-  h1 {
-    margin-bottom: 30px;
-    color: gold;
-    text-shadow: 0 0 10px #ff0;
-  }
-  .slot-machine {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-  }
-  .digit-container {
-    width: 45px;
-    height: 80px;
-    overflow: hidden;
-    border: 2px solid #555;
-    border-radius: 8px;
-    background: #222;
-    box-shadow: 0 0 10px rgba(255,255,255,0.2);
-  }
-  .digit-strip {
-    font-size: 2.2rem;
-    display: flex;
-    flex-direction: column;
-    transform: translateY(0);
-  }
-  .digit-strip span {
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  button {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    padding: 10px 25px;
-    font-size: 1rem;
-    background: #ff69b4;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 0 10px #ff69b4;
-    transition: 0.3s;
-    color: #fff;
-  }
-  button:hover {
-    background: #ff85c1;
-    box-shadow: 0 0 20px #ff85c1;
-  }
-  .mensaje {
-    font-size: 0.9rem;
-    color: #ffcc00;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 40px;
+}
+h1 {
+  margin-bottom: 30px;
+  color: gold;
+  text-shadow: 0 0 10px #ff0;
+  font-size: 2.5rem;
+}
+.slot-machine {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 15px 0;
+}
+.digit-container {
+  width: 40px;
+  height: 70px;
+  overflow: hidden;
+  border: 2px solid #555;
+  border-radius: 8px;
+  background: #222;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+.digit-strip {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+}
+.digit-strip span {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+button {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding: 8px 22px;
+  font-size: 0.95rem;
+  background: #4CAF50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 0 8px #4CAF50;
+  transition: 0.3s;
+}
+button:hover {
+  background: #66BB6A;
+  box-shadow: 0 0 15px #66BB6A;
+}
+.mensaje {
+  font-size: 0.85rem;
+  color: #ffcc00;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
 
-<h1>🎰 Contadores Lotería 🎰</h1>
+<h1>Lotería Cubana</h1>
 
-<div id="contador2" class="slot-machine"></div>
-<button onclick="generarNumeroContador('contador2', 2)">¡Gira y Descubre! 🎲</button>
+<!-- Contadores 1 a 5 dígitos -->
+<div id="contador1" class="slot-machine"></div>
+<button onclick="generarNumeroSuspense('contador1',1)">✨ ¡Gira tu Suerte! ✨</button>
 <div class="mensaje">Buena suerte hoy ♥️</div>
 
-<div id="contador3" class="slot-machine"></div>
-<button onclick="generarNumeroContador('contador3', 3)">¡Inténtalo y gana! 🍀</button>
+<div id="contador2" class="slot-machine"></div>
+<button onclick="generarNumeroSuspense('contador2',2)">💫 ¡Descubre tu Número! 💫</button>
 <div class="mensaje">Que la suerte te acompañe ♥️</div>
 
-<div id="contador4" class="slot-machine"></div>
-<button onclick="generarNumeroContador('contador4', 4)">¡Vamos a probar tu suerte! 🎰</button>
+<div id="contador3" class="slot-machine"></div>
+<button onclick="generarNumeroSuspense('contador3',3)">🌟 ¡Haz tu Giro Mágico! 🌟</button>
 <div class="mensaje">Hoy puede ser tu día ♥️</div>
 
+<div id="contador4" class="slot-machine"></div>
+<button onclick="generarNumeroSuspense('contador4',4)">🎉 ¡Prueba tu Suerte! 🎉</button>
+<div class="mensaje">¡Que salga el ganador! ♥️</div>
+
+<div id="contador5" class="slot-machine"></div>
+<button onclick="generarNumeroSuspense('contador5',5)">🏆 ¡Premio Mayor! 🏆</button>
+<div class="mensaje">¡La fortuna te sonríe hoy ♥️</div>
+
 <script>
-function crearContador(id, numDigitos) {
+// Crear contador con cualquier cantidad de dígitos
+function crearContador(id, numDigitos){
   const contenedor = document.getElementById(id);
   contenedor.innerHTML = "";
-  for (let i = 0; i < numDigitos; i++) {
+  for(let i=0; i<numDigitos; i++){
     const div = document.createElement("div");
     div.classList.add("digit-container");
     const strip = document.createElement("div");
@@ -98,9 +109,8 @@ function crearContador(id, numDigitos) {
     div.appendChild(strip);
     contenedor.appendChild(div);
 
-    // inicializar la strip con números
-    for (let j = 0; j < 40; j++) {
-      for (let n = 0; n <= 9; n++) {
+    for(let j=0; j<40; j++){
+      for(let n=0; n<=9; n++){
         const span = document.createElement("span");
         span.textContent = n;
         strip.appendChild(span);
@@ -109,47 +119,61 @@ function crearContador(id, numDigitos) {
   }
 }
 
-// Función que genera número aleatorio y aplica animación
-function generarNumeroContador(id, numDigitos) {
+// Número secreto aleatorio
+function generarNumeroSecreto(){
+  return Math.floor(Math.random()*10);
+}
+
+// Función de suspense máximo tipo casino
+function generarNumeroSuspense(id, numDigitos){
   const contenedor = document.getElementById(id);
   const strips = contenedor.querySelectorAll(".digit-strip");
-  const numeroGanador = String(Math.floor(Math.pow(10,numDigitos-1) + Math.random()*9*Math.pow(10,numDigitos-1)));
 
-  strips.forEach((strip, i) => {
-    const digito = parseInt(numeroGanador[i]);
+  let numeroBase = "";
+  for(let i=0; i<numDigitos; i++){
+    numeroBase += Math.floor(Math.random()*10);
+  }
+
+  strips.forEach((strip,i)=>{
+    const digito = parseInt(numeroBase[i]);
+    const secreto = generarNumeroSecreto();
+    const numeroFinal = (digito + secreto) % 10;
+
     const totalSpans = strip.children.length;
-    const vueltas = 20 + i*5;
-    let offset = -(vueltas*10 + digito) * 80; // altura de span ajustada
-
-    const maxOffset = -(totalSpans - 10) * 80;
-    if (offset < maxOffset) offset = maxOffset;
+    const vueltas = 25 + i*10; // más vueltas para mayor suspense
+    let offset = -(vueltas*10 + numeroFinal) * 70;
+    const maxOffset = -(totalSpans - 10) * 70;
+    if(offset < maxOffset) offset = maxOffset;
 
     strip.style.transition = "none";
     strip.style.transform = "translateY(0)";
-    void strip.offsetWidth;
+    void strip.offsetWidth; // reinicia transición
 
-    strip.style.transition = `transform ${2 + i*0.5}s cubic-bezier(0.25, 1, 0.5, 1)`;
+    strip.style.transition = `transform ${2 + i*0.8}s cubic-bezier(0.25,1,0.5,1)`;
     strip.style.transform = `translateY(${offset}px)`;
 
-    const rebote = (vueltas > 10) ? 10 : 0;
-
-    if (rebote > 0) {
-      setTimeout(() => {
+    // rebotes finales
+    const rebotes = [8,5,2];
+    rebotes.forEach((r,j)=>{
+      setTimeout(()=>{
         strip.style.transition = `transform 0.2s ease-out`;
-        strip.style.transform = `translateY(${offset+rebote}px)`;
-        setTimeout(() => {
-          strip.style.transition = `transform 0.1s ease-in`;
+        strip.style.transform = `translateY(${offset+r}px)`;
+        setTimeout(()=>{
+          strip.style.transition = `transform 0.15s ease-in`;
           strip.style.transform = `translateY(${offset}px)`;
-        }, 200);
-      }, (2000 + i*500));
-    }
+        },150);
+      }, 2000 + i*300 + j*200);
+    });
   });
 }
 
-// Inicializamos los contadores
-crearContador("contador2", 2);
-crearContador("contador3", 3);
-crearContador("contador4", 4);
+// Inicializar todos los contadores
+crearContador("contador1",1);
+crearContador("contador2",2);
+crearContador("contador3",3);
+crearContador("contador4",4);
+crearContador("contador5",5);
 </script>
+
 </body>
 </html>
