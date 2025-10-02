@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lotería del Día - Número Ganador</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #ff3b3b, #8b0000);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+  }
+
+  .number {
+    font-size: 60px;
+    font-weight: bold;
+    background: #fff;
+    color: #d60000;
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    letter-spacing: 8px;
+    min-width: 300px;
+    text-align: center;
+  }
+
+  .btn {
+    margin-top: 25px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    background: gold;
+    color: #000;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  .btn:hover {
+    background: #ffd700;
+    transform: scale(1.05);
+  }
+
+  footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #ffdada;
+  }
+</style>
+</head>
+<body>
+
+<h1>🎉 Número Ganador de Hoy 🎉</h1>
+<div class="number" id="winner">00000</div>
+<button class="btn" onclick="drawNumber()">SORTEAR</button>
+
+<footer>¡Buena suerte en la lotería del día!</footer>
+
+<script>
+function drawNumber() {
+  let winner = document.getElementById("winner");
+  let finalNumber = String(Math.floor(Math.random() * 100000)).padStart(5, "0");
+
+  let count = 0;
+  let interval = setInterval(() => {
+    let randomNum = String(Math.floor(Math.random() * 100000)).padStart(5, "0");
+    winner.textContent = randomNum;
+    count++;
+    if (count > 20) { // Después de 20 "cambios", muestra el final
+      clearInterval(interval);
+      winner.textContent = finalNumber;
+    }
+  }, 100); // velocidad de la animación (100 ms)
+}
+</script>
+
+</body>
+</html>
