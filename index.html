@@ -2,89 +2,154 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lotería del Día - Número Ganador</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lotería - Contadores Divertidos</title>
 <style>
   body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #ff3b3b, #8b0000);
+    background: #111;
     color: #fff;
+    text-align: center;
+    padding: 40px;
+  }
+  h1 {
+    margin-bottom: 30px;
+    color: gold;
+    text-shadow: 0 0 10px #ff0;
+  }
+  .slot-machine {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  .digit-container {
+    width: 45px;
+    height: 80px;
+    overflow: hidden;
+    border: 2px solid #555;
+    border-radius: 8px;
+    background: #222;
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+  }
+  .digit-strip {
+    font-size: 2.2rem;
+    display: flex;
     flex-direction: column;
+    transform: translateY(0);
   }
-
-  h1 {
-    font-size: 32px;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+  .digit-strip span {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
-  .number {
-    font-size: 60px;
-    font-weight: bold;
-    background: #fff;
-    color: #d60000;
-    padding: 20px 40px;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-    letter-spacing: 8px;
-    min-width: 300px;
-    text-align: center;
-  }
-
-  .btn {
-    margin-top: 25px;
-    padding: 12px 20px;
+  button {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 10px 25px;
+    font-size: 1rem;
+    background: #ff69b4;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
-    background: gold;
-    color: #000;
     font-weight: bold;
+    box-shadow: 0 0 10px #ff69b4;
     transition: 0.3s;
+    color: #fff;
   }
-  .btn:hover {
-    background: #ffd700;
-    transform: scale(1.05);
+  button:hover {
+    background: #ff85c1;
+    box-shadow: 0 0 20px #ff85c1;
   }
-
-  footer {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #ffdada;
+  .mensaje {
+    font-size: 0.9rem;
+    color: #ffcc00;
+    margin-bottom: 20px;
+    font-weight: bold;
   }
 </style>
 </head>
 <body>
 
-<h1>🎉 Número Ganador de Hoy 🎉</h1>
-<div class="number" id="winner">00000</div>
-<button class="btn" onclick="drawNumber()">SORTEAR</button>
+<h1>🎰 Contadores Lotería 🎰</h1>
 
-<footer>¡Buena suerte en la lotería del día!</footer>
+<div id="contador2" class="slot-machine"></div>
+<button onclick="generarNumeroContador('contador2', 2)">¡Gira y Descubre! 🎲</button>
+<div class="mensaje">Buena suerte hoy ♥️</div>
+
+<div id="contador3" class="slot-machine"></div>
+<button onclick="generarNumeroContador('contador3', 3)">¡Inténtalo y gana! 🍀</button>
+<div class="mensaje">Que la suerte te acompañe ♥️</div>
+
+<div id="contador4" class="slot-machine"></div>
+<button onclick="generarNumeroContador('contador4', 4)">¡Vamos a probar tu suerte! 🎰</button>
+<div class="mensaje">Hoy puede ser tu día ♥️</div>
 
 <script>
-function drawNumber() {
-  let winner = document.getElementById("winner");
-  let finalNumber = String(Math.floor(Math.random() * 100000)).padStart(5, "0");
+function crearContador(id, numDigitos) {
+  const contenedor = document.getElementById(id);
+  contenedor.innerHTML = "";
+  for (let i = 0; i < numDigitos; i++) {
+    const div = document.createElement("div");
+    div.classList.add("digit-container");
+    const strip = document.createElement("div");
+    strip.classList.add("digit-strip");
+    div.appendChild(strip);
+    contenedor.appendChild(div);
 
-  let count = 0;
-  let interval = setInterval(() => {
-    let randomNum = String(Math.floor(Math.random() * 100000)).padStart(5, "0");
-    winner.textContent = randomNum;
-    count++;
-    if (count > 20) { // Después de 20 "cambios", muestra el final
-      clearInterval(interval);
-      winner.textContent = finalNumber;
+    // inicializar la strip con números
+    for (let j = 0; j < 40; j++) {
+      for (let n = 0; n <= 9; n++) {
+        const span = document.createElement("span");
+        span.textContent = n;
+        strip.appendChild(span);
+      }
     }
-  }, 100); // velocidad de la animación (100 ms)
+  }
 }
-</script>
 
+// Función que genera número aleatorio y aplica animación
+function generarNumeroContador(id, numDigitos) {
+  const contenedor = document.getElementById(id);
+  const strips = contenedor.querySelectorAll(".digit-strip");
+  const numeroGanador = String(Math.floor(Math.pow(10,numDigitos-1) + Math.random()*9*Math.pow(10,numDigitos-1)));
+
+  strips.forEach((strip, i) => {
+    const digito = parseInt(numeroGanador[i]);
+    const totalSpans = strip.children.length;
+    const vueltas = 20 + i*5;
+    let offset = -(vueltas*10 + digito) * 80; // altura de span ajustada
+
+    const maxOffset = -(totalSpans - 10) * 80;
+    if (offset < maxOffset) offset = maxOffset;
+
+    strip.style.transition = "none";
+    strip.style.transform = "translateY(0)";
+    void strip.offsetWidth;
+
+    strip.style.transition = `transform ${2 + i*0.5}s cubic-bezier(0.25, 1, 0.5, 1)`;
+    strip.style.transform = `translateY(${offset}px)`;
+
+    const rebote = (vueltas > 10) ? 10 : 0;
+
+    if (rebote > 0) {
+      setTimeout(() => {
+        strip.style.transition = `transform 0.2s ease-out`;
+        strip.style.transform = `translateY(${offset+rebote}px)`;
+        setTimeout(() => {
+          strip.style.transition = `transform 0.1s ease-in`;
+          strip.style.transform = `translateY(${offset}px)`;
+        }, 200);
+      }, (2000 + i*500));
+    }
+  });
+}
+
+// Inicializamos los contadores
+crearContador("contador2", 2);
+crearContador("contador3", 3);
+crearContador("contador4", 4);
+</script>
 </body>
 </html>
